@@ -99,6 +99,7 @@
 
     .section {
       padding: 108px 0;
+      scroll-margin-top: 96px;
     }
 
     .section-kicker {
@@ -1318,24 +1319,69 @@
         width: min(100% - 28px, 1160px);
       }
 
+      .section {
+        padding: 64px 0;
+        scroll-margin-top: 92px;
+      }
+
+      .section-title {
+        font-size: clamp(1.9rem, 10vw, 2.72rem);
+        line-height: 1.04;
+      }
+
+      .section-copy {
+        margin-top: 14px;
+        font-size: .98rem;
+        line-height: 1.58;
+      }
+
       .nav-wrap {
+        min-height: 64px;
         width: min(100% - 24px, 1160px);
-        padding-left: 14px;
+        padding: 10px 12px;
       }
 
       .brand-logo {
-        width: 154px;
-        height: 42px;
+        width: 148px;
+        height: 38px;
+      }
+
+      .menu-toggle {
+        width: 46px;
+      }
+
+      .nav-links {
+        top: 86px;
+        left: 12px;
+        right: 12px;
+        gap: 4px;
+        padding: 12px;
+      }
+
+      .nav-links a {
+        padding: 13px 14px;
+        font-size: .96rem;
       }
 
       .hero {
-        padding-bottom: 58px;
+        padding: 112px 0 46px;
       }
 
       .eyebrow {
         max-width: 100%;
         font-size: .58rem;
         letter-spacing: .02em;
+      }
+
+      h1 {
+        font-size: clamp(2.62rem, 13vw, 3.18rem);
+        line-height: .95;
+      }
+
+      .hero-copy p {
+        margin-top: 18px;
+        font-size: 1rem;
+        line-height: 1.58;
       }
 
       .hero-actions,
@@ -1350,26 +1396,66 @@
 
       .btn {
         width: 100%;
+        min-height: 52px;
+      }
+
+      .hero-actions {
+        gap: 10px;
+        margin-top: 28px;
+      }
+
+      .hero-proof {
+        gap: 8px;
+        margin-top: 22px;
+      }
+
+      .proof-pill {
+        padding: 9px 11px;
+        font-size: .8rem;
       }
 
       .hero-visual {
-        min-height: 560px;
+        min-height: auto;
+        aspect-ratio: 4 / 5;
+        margin-top: 10px;
+      }
+
+      .portrait-frame {
+        position: absolute;
+        inset: 0;
+      }
+
+      .portrait-frame img {
+        object-position: center top;
       }
 
       .floating-badge {
-        width: 108px;
-        font-size: .78rem;
+        top: 12px;
+        right: 12px;
+        width: 92px;
+        font-size: .68rem;
       }
 
       .floating-badge span {
-        font-size: 1.72rem;
+        font-size: 1.46rem;
       }
 
       .hero-card {
-        width: calc(100% - 28px);
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        width: auto;
+        padding: 14px;
       }
 
-      .stats-grid,
+      .hero-card strong {
+        font-size: .95rem;
+      }
+
+      .hero-card span {
+        font-size: .82rem;
+      }
+
       .services-grid,
       .courses-grid,
       .testimonial-grid,
@@ -1379,8 +1465,63 @@
         grid-template-columns: 1fr;
       }
 
+      .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .stat-card {
+        min-height: 128px;
+        padding: 18px;
+      }
+
+      .stat-number {
+        font-size: 2.35rem;
+      }
+
+      .stat-card p {
+        font-size: .86rem;
+        line-height: 1.35;
+      }
+
+      .services-grid,
+      .courses-grid,
+      .testimonial-grid,
+      .faq-list {
+        gap: 12px;
+      }
+
+      .service-card {
+        min-height: auto;
+        padding: 22px;
+      }
+
+      .course-card {
+        min-height: auto;
+        padding: 22px;
+        gap: 22px;
+      }
+
+      .course-card h3 {
+        font-size: 1.8rem;
+      }
+
+      .course-card p {
+        font-size: .95rem;
+      }
+
+      .course-meta {
+        gap: 7px;
+        margin-top: 18px;
+      }
+
+      .course-meta span {
+        padding: 7px 9px;
+        font-size: .74rem;
+      }
+
       .gallery-grid {
-        grid-auto-rows: 360px;
+        grid-auto-rows: 330px;
       }
 
       .gallery-item:first-child {
@@ -1388,26 +1529,54 @@
       }
 
       .method-band {
-        padding: 18px;
+        padding: 16px;
+        gap: 22px;
       }
 
       .method-band img {
-        height: 420px;
+        height: 380px;
       }
 
       .contact-panel {
         padding: 22px;
       }
 
+      .field input,
+      .field textarea {
+        padding: 14px;
+        font-size: 16px;
+      }
+
+      .faq-question {
+        min-height: 62px;
+        padding: 0 16px;
+        font-size: .94rem;
+        line-height: 1.25;
+      }
+
+      .faq-answer p {
+        padding: 0 16px 18px;
+      }
+
       .whatsapp-float {
-        right: 14px;
-        bottom: 14px;
-        min-height: 54px;
-        padding: 0 15px;
+        right: 12px;
+        bottom: 12px;
+        width: 52px;
+        min-height: 52px;
+        padding: 0;
+        border-radius: 50%;
       }
 
       .whatsapp-float span:not(.whatsapp-tooltip) {
         display: none;
+      }
+
+      .whatsapp-tooltip {
+        display: none;
+      }
+
+      .site-footer {
+        padding-bottom: 88px;
       }
     }
 
@@ -1438,6 +1607,7 @@
           <a href="#galeria">Galeria</a>
           <a href="#depoimentos">Depoimentos</a>
           <a href="#faq">FAQ</a>
+          <a href="#contato">Contato</a>
         </div>
         <a class="btn nav-cta" href="https://wa.me/5566999581011?text=Oi%2C%20Cristiane!%20Quero%20agendar%20um%20atendimento." target="_blank" rel="noopener">Agendar horário</a>
         <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks">
