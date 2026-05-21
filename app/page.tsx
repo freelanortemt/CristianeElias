@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { useMemo, useState } from "react";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
@@ -193,8 +193,8 @@ function Reveal({
 export default function Home() {
   const [openFaq, setOpenFaq] = useState(0);
   const { scrollYProgress } = useScroll();
-  const heroImageY = useTransform(scrollYProgress, [0, 0.28], ["0%", "9%"]);
-  const heroTextY = useTransform(scrollYProgress, [0, 0.22], ["0%", "-7%"]);
+  const heroImageY = useTransform(scrollYProgress, [0, 0.28], ["0%", "5%"]);
+  const heroTextY = useTransform(scrollYProgress, [0, 0.22], ["0%", "-4%"]);
 
   const currentYear = useMemo(() => new Date().getFullYear(), []);
 
@@ -202,37 +202,50 @@ export default function Home() {
     <main className="min-h-screen overflow-hidden bg-porcelain text-coffee">
       <Header />
 
-      <section id="inicio" className="relative min-h-screen overflow-hidden pt-24 md:pt-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(200,164,107,0.22),transparent_30%),linear-gradient(120deg,#F7F3EE_0%,#E8D8C8_48%,#F7F3EE_100%)]" />
-        <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(75,53,42,.35)_1px,transparent_1px),linear-gradient(90deg,rgba(75,53,42,.25)_1px,transparent_1px)] [background-size:92px_92px]" />
+      <section id="inicio" className="relative overflow-hidden pt-[92px] md:min-h-screen md:pt-0">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_14%,rgba(200,164,107,0.18),transparent_31%),linear-gradient(135deg,#F7F3EE_0%,#E8D8C8_48%,#F7F3EE_100%)]" />
+        <div className="absolute inset-0 opacity-[0.065] [background-image:linear-gradient(rgba(75,53,42,.32)_1px,transparent_1px),linear-gradient(90deg,rgba(75,53,42,.22)_1px,transparent_1px)] [background-size:76px_76px]" />
 
-        <div className="relative mx-auto grid min-h-[calc(100vh-96px)] w-[min(1180px,calc(100%-28px))] items-center gap-8 py-8 md:min-h-screen md:grid-cols-[1.02fr_.98fr] md:gap-14 md:py-24">
-          <motion.div style={{ y: heroTextY }} className="z-10">
+        <div className="relative mx-auto grid w-[min(1180px,calc(100%-24px))] gap-5 pb-9 pt-3 md:min-h-screen md:grid-cols-[.92fr_1.08fr] md:items-center md:gap-16 md:py-24">
+          <motion.div style={{ y: heroTextY }} className="order-2 z-10 md:order-1">
             <motion.p
-              initial={{ opacity: 0, y: 18 }}
+              initial={{ opacity: 1, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
-              className="mb-5 inline-flex items-center gap-3 rounded-full border border-gold/30 bg-white/45 px-4 py-2 text-[0.68rem] font-semibold tracking-[0.16em] text-clay backdrop-blur-xl md:text-xs"
+              className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-white/48 px-3 py-2 text-[0.62rem] font-bold uppercase tracking-[0.18em] text-clay backdrop-blur-xl md:mb-5 md:gap-3 md:px-4 md:text-xs"
             >
-              <span className="h-px w-8 bg-gradient-to-r from-gold to-terracotta" />
+              <span className="h-px w-6 bg-gradient-to-r from-gold to-terracotta md:w-8" />
               BELEZA SOFISTICADA | SINOP - MT
             </motion.p>
 
             <motion.h1
-              initial={{ opacity: 0, y: 28 }}
+              initial={{ opacity: 1, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.85, delay: 0.08 }}
-              className="font-display text-[clamp(3.35rem,14vw,8.6rem)] leading-[0.86] tracking-[-0.02em] text-coffee"
+              className="font-display text-[clamp(3.2rem,16vw,8.4rem)] leading-[0.82] tracking-[-0.035em] text-coffee"
             >
               Cristiane
-              <span className="block"> Elias</span>
+              <span className="block">Elias</span>
             </motion.h1>
 
+            <motion.div
+              initial={{ opacity: 1, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.28 }}
+              className="mt-6 grid grid-cols-1 gap-2 min-[420px]:grid-cols-2 md:mt-8 md:flex md:gap-3"
+            >
+              <PremiumButton
+                href={whatsappLink("Oi, Cristiane! Quero agendar uma consultoria de beleza.")}
+                label="Agendar experiência"
+              />
+              <PremiumButton href={instagram} label="Instagram" variant="instagram" />
+            </motion.div>
+
             <motion.p
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 1, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.75, delay: 0.18 }}
-              className="mt-7 max-w-2xl text-base leading-8 text-coffee/72 md:text-xl md:leading-9"
+              className="mt-5 max-w-2xl text-[0.98rem] leading-7 text-coffee/72 md:mt-7 md:text-xl md:leading-9"
             >
               Maquiagem elegante para mulheres que vivem dias reais. Com 18 anos de experiência,
               Cristiane une técnica profissional, atendimento humanizado e o método Maquiagem em
@@ -240,32 +253,19 @@ export default function Home() {
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.28 }}
-              className="mt-8 flex flex-col gap-3 sm:flex-row"
-            >
-              <PremiumButton
-                href={whatsappLink("Oi, Cristiane! Quero agendar uma consultoria de beleza.")}
-                label="Agendar experiência"
-              />
-              <PremiumButton href="#galeria" label="Ver resultados" variant="ghost" />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 1, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.75, delay: 0.36 }}
-              className="mt-8 grid max-w-xl grid-cols-3 gap-2"
+              className="mt-5 grid max-w-xl grid-cols-3 gap-2 md:mt-8"
             >
               {[
                 ["18+", "anos"],
                 ["10", "minutos"],
                 ["5★", "experiência"]
               ].map(([value, label]) => (
-                <div key={label} className="rounded-luxe border border-white/50 bg-white/45 p-4 backdrop-blur-xl">
-                  <strong className="font-display text-3xl leading-none">{value}</strong>
-                  <span className="mt-1 block text-xs font-bold uppercase tracking-[0.16em] text-coffee/54">
+                <div key={label} className="rounded-luxe border border-white/55 bg-white/50 p-3 shadow-soft backdrop-blur-xl md:p-4">
+                  <strong className="font-display text-3xl leading-none md:text-4xl">{value}</strong>
+                  <span className="mt-1 block text-[0.62rem] font-black uppercase tracking-[0.16em] text-coffee/54 md:text-xs">
                     {label}
                   </span>
                 </div>
@@ -273,44 +273,39 @@ export default function Home() {
             </motion.div>
           </motion.div>
 
-          <motion.div style={{ y: heroImageY }} className="relative min-h-[460px] sm:min-h-[540px] md:min-h-[760px]">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96, y: 28 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.1 }}
-              className="absolute inset-0 overflow-hidden rounded-luxe shadow-luxe"
-            >
+          <motion.div style={{ y: heroImageY }} className="relative order-1 min-h-[430px] md:order-2 md:min-h-[760px]">
+            <div className="absolute inset-0 overflow-hidden rounded-luxe shadow-luxe">
               <img
-                src={img("cliente-soft-glam-01.jpg")}
-                alt="Cliente com maquiagem soft glam sofisticada"
-                className="h-full w-full object-cover object-[50%_18%]"
+                src={img("cristiane-retrato-premium.jpg")}
+                alt="Cristiane Elias, consultora de beleza"
+                className="h-full w-full object-cover object-top"
                 loading="eager"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/44 via-transparent to-transparent" />
-            </motion.div>
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/44 via-transparent to-transparent md:bg-gradient-to-t md:from-ink/34 md:via-transparent" />
+            </div>
 
             <motion.div
-              initial={{ opacity: 0, x: -22 }}
+              initial={{ opacity: 1, x: -12 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.75, delay: 0.48 }}
-              className="absolute bottom-5 left-5 right-5 rounded-luxe border border-white/35 bg-porcelain/72 p-5 shadow-soft backdrop-blur-2xl md:left-[-34px] md:right-auto md:w-80"
+              className="absolute bottom-5 left-[-34px] hidden w-80 rounded-luxe border border-white/35 bg-ink/52 p-5 text-porcelain shadow-soft backdrop-blur-2xl md:block"
             >
-              <span className="text-xs font-extrabold uppercase tracking-[0.18em] text-terracotta">
+              <span className="text-[0.68rem] font-extrabold uppercase tracking-[0.18em] text-terracotta md:text-xs">
                 assinatura
               </span>
-              <p className="mt-2 font-display text-2xl leading-tight">
-                Beleza natural com acabamento de alto padrão.
+              <p className="mt-2 font-display text-2xl leading-[0.98]">
+                Técnica, presença e beleza natural.
               </p>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      <section className="border-y border-coffee/10 bg-white/45 py-4 backdrop-blur-xl">
+      <section className="border-y border-coffee/10 bg-white/45 py-3 backdrop-blur-xl md:py-4">
         <div className="mx-auto flex w-[min(1180px,calc(100%-28px))] snap-x gap-3 overflow-x-auto md:grid md:grid-cols-4">
           {["Atendimento exclusivo", "Método autoral", "Imagem corporativa", "Beleza para eventos"].map(
             (item) => (
-              <div key={item} className="min-w-[230px] snap-start rounded-luxe border border-coffee/10 bg-porcelain/70 px-5 py-4 text-sm font-bold text-coffee/70 md:min-w-0">
+              <div key={item} className="min-w-[205px] snap-start rounded-luxe border border-coffee/10 bg-porcelain/70 px-4 py-3 text-sm font-bold text-coffee/70 md:min-w-0 md:px-5 md:py-4">
                 {item}
               </div>
             )
@@ -371,7 +366,7 @@ export default function Home() {
         </div>
       </Section>
 
-      <section className="relative overflow-hidden bg-coffee py-20 text-porcelain md:py-28">
+      <section className="relative overflow-hidden bg-coffee py-14 text-porcelain md:py-28">
         <div className="absolute inset-0 opacity-30">
           <img src={img("cliente-evento-02.jpg")} alt="" className="h-full w-full object-cover" loading="lazy" />
         </div>
@@ -431,31 +426,10 @@ export default function Home() {
       </Section>
 
       <Section id="galeria" eyebrow="Portfólio" title="Resultados reais com acabamento editorial e beleza atemporal." copy="Fotos de clientes e produções que mostram pele, olhos, sobrancelhas, acabamento e presença com naturalidade sofisticada.">
-        <div className="grid auto-rows-[320px] gap-4 md:grid-cols-4 md:auto-rows-[300px]">
-          {gallery.map((item, index) => (
-            <Reveal
-              key={item.src}
-              delay={(index % 4) * 0.04}
-              className={index === 0 || index === 3 ? "md:col-span-2 md:row-span-2" : ""}
-            >
-              <figure className="group relative h-full overflow-hidden rounded-luxe bg-champagne shadow-soft">
-                <img
-                  src={img(item.src)}
-                  alt={`${item.title} - ${item.tag}`}
-                  className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-                  loading="lazy"
-                />
-                <figcaption className="absolute inset-x-4 bottom-4 rounded-luxe border border-white/25 bg-ink/48 p-4 text-porcelain opacity-0 backdrop-blur-xl transition duration-500 group-hover:opacity-100 md:opacity-100">
-                  <span className="text-[0.68rem] font-extrabold uppercase tracking-[0.18em] text-gold">{item.tag}</span>
-                  <p className="mt-1 font-display text-2xl">{item.title}</p>
-                </figcaption>
-              </figure>
-            </Reveal>
-          ))}
-        </div>
+        <ResultsShowcase />
       </Section>
 
-      <section className="bg-white/45 py-20 md:py-28">
+      <section className="bg-white/45 py-14 md:py-28">
         <div className="mx-auto w-[min(1180px,calc(100%-28px))]">
           <Reveal>
             <div className="max-w-3xl">
@@ -510,7 +484,7 @@ export default function Home() {
         </div>
       </Section>
 
-      <section id="contato" className="relative overflow-hidden bg-coffee py-20 text-porcelain md:py-28">
+      <section id="contato" className="relative overflow-hidden bg-coffee py-14 text-porcelain md:py-28">
         <div className="absolute inset-0 opacity-20">
           <img src={img("cliente-natural-06.jpg")} alt="" className="h-full w-full object-cover" loading="lazy" />
         </div>
@@ -565,6 +539,15 @@ function Header() {
         >
           Agendar
         </a>
+        <a
+          href={instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden h-11 w-11 place-items-center rounded-luxe border border-coffee/10 bg-white/48 text-sm font-black text-coffee/70 shadow-soft transition hover:-translate-y-0.5 hover:border-terracotta/35 hover:text-terracotta lg:grid"
+          aria-label="Instagram Cristiane Elias"
+        >
+          IG
+        </a>
         <details className="relative md:hidden">
           <summary className="grid h-11 w-11 cursor-pointer list-none place-items-center rounded-luxe border border-coffee/10 bg-white/55 text-2xl">
             ≡
@@ -575,6 +558,9 @@ function Header() {
                 {label}
               </a>
             ))}
+            <a href={instagram} target="_blank" rel="noopener noreferrer" className="rounded-luxe border border-terracotta/20 bg-white/70 px-4 py-3 text-sm font-black text-terracotta">
+              Instagram
+            </a>
           </div>
         </details>
       </nav>
@@ -596,10 +582,10 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className="scroll-mt-24 py-20 md:py-28">
+    <section id={id} className="scroll-mt-24 py-14 md:py-28">
       <div className="mx-auto w-[min(1180px,calc(100%-28px))]">
         <Reveal>
-          <div className="mb-10 grid gap-6 md:mb-14 md:grid-cols-[1.05fr_.95fr] md:items-end">
+          <div className="mb-8 grid gap-4 md:mb-14 md:grid-cols-[1.05fr_.95fr] md:items-end md:gap-6">
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-terracotta">{eyebrow}</p>
               <h2 className="mt-4 font-display text-[clamp(2.35rem,6vw,5.2rem)] leading-[0.98] tracking-[-0.01em]">
@@ -623,13 +609,14 @@ function PremiumButton({
 }: {
   href: string;
   label: string;
-  variant?: "primary" | "ghost" | "light";
+  variant?: "primary" | "ghost" | "light" | "instagram";
   className?: string;
 }) {
   const styles = {
-    primary: "bg-terracotta text-white shadow-soft hover:bg-coffee",
-    ghost: "border border-coffee/12 bg-white/58 text-coffee backdrop-blur-xl hover:bg-champagne/60",
-    light: "bg-porcelain text-coffee hover:bg-white"
+    primary: "bg-terracotta text-white shadow-soft hover:bg-coffee before:from-white/0 before:via-white/30 before:to-white/0",
+    ghost: "border border-coffee/12 bg-white/58 text-coffee backdrop-blur-xl hover:bg-champagne/60 before:from-white/0 before:via-gold/25 before:to-white/0",
+    light: "bg-porcelain text-coffee hover:bg-white before:from-white/0 before:via-gold/25 before:to-white/0",
+    instagram: "border border-terracotta/20 bg-white/62 text-terracotta backdrop-blur-xl hover:border-terracotta/45 hover:bg-white before:from-white/0 before:via-terracotta/15 before:to-white/0"
   }[variant];
 
   return (
@@ -637,10 +624,89 @@ function PremiumButton({
       href={href}
       target={href.startsWith("http") ? "_blank" : undefined}
       rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-      className={`inline-flex min-h-14 items-center justify-center rounded-luxe px-6 text-sm font-extrabold transition duration-300 hover:-translate-y-0.5 ${styles} ${className}`}
+      className={`group relative inline-flex min-h-14 items-center justify-center overflow-hidden rounded-luxe px-6 text-sm font-extrabold transition duration-300 before:absolute before:inset-y-0 before:-left-1/2 before:w-1/2 before:-skew-x-12 before:bg-gradient-to-r before:opacity-0 before:transition before:duration-700 hover:-translate-y-0.5 hover:before:left-[120%] hover:before:opacity-100 ${styles} ${className}`}
     >
-      {label}
+      <span className="relative z-10 inline-flex items-center gap-2">
+        {label}
+        <span className="transition duration-300 group-hover:translate-x-1">↗</span>
+      </span>
     </a>
+  );
+}
+
+function ResultsShowcase() {
+  const [active, setActive] = useState(0);
+  const current = gallery[active];
+
+  return (
+    <Reveal>
+      <div className="grid gap-4 md:grid-cols-[1.12fr_.88fr] md:items-stretch">
+        <div className="relative min-h-[470px] overflow-hidden rounded-luxe bg-champagne shadow-luxe md:min-h-[720px]">
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={current.src}
+              src={img(current.src)}
+              alt={`${current.title} - ${current.tag}`}
+              initial={{ opacity: 0, scale: 1.035, filter: "blur(12px)" }}
+              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+              exit={{ opacity: 0, scale: 0.985, filter: "blur(10px)" }}
+              transition={{ duration: 0.62, ease: [0.22, 0.76, 0.2, 1] }}
+              className="absolute inset-0 h-full w-full object-cover"
+              loading={active === 0 ? "eager" : "lazy"}
+            />
+          </AnimatePresence>
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/62 via-ink/6 to-transparent" />
+          <motion.div
+            key={`${current.src}-caption`}
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.48 }}
+            className="absolute inset-x-3 bottom-3 rounded-luxe border border-white/20 bg-ink/40 p-4 text-porcelain shadow-soft backdrop-blur-2xl md:inset-x-5 md:bottom-5 md:p-6"
+          >
+            <p className="text-[0.66rem] font-black uppercase tracking-[0.22em] text-gold">{current.tag}</p>
+            <h3 className="mt-2 font-display text-4xl leading-none md:text-6xl">{current.title}</h3>
+          </motion.div>
+        </div>
+
+        <div className="rounded-luxe border border-coffee/10 bg-white/48 p-3 shadow-soft backdrop-blur-xl md:p-4">
+          <div className="mb-3 flex items-center justify-between px-1">
+            <p className="text-[0.68rem] font-black uppercase tracking-[0.2em] text-terracotta">
+              Selecione o resultado
+            </p>
+            <span className="font-display text-2xl text-coffee/54">
+              {String(active + 1).padStart(2, "0")}
+            </span>
+          </div>
+          <div className="flex snap-x gap-3 overflow-x-auto pb-2 md:grid md:max-h-[640px] md:grid-cols-2 md:overflow-visible md:pb-0">
+            {gallery.map((item, index) => (
+              <button
+                key={item.src}
+                type="button"
+                onClick={() => setActive(index)}
+                className={`group relative h-40 min-w-[150px] snap-start overflow-hidden rounded-luxe border text-left shadow-soft transition duration-500 md:h-[150px] md:min-w-0 ${
+                  active === index
+                    ? "border-terracotta/70 ring-2 ring-terracotta/18"
+                    : "border-white/45 opacity-78 hover:opacity-100"
+                }`}
+              >
+                <img
+                  src={img(item.src)}
+                  alt=""
+                  className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
+                <div className="absolute inset-x-2 bottom-2">
+                  <span className="rounded-full bg-porcelain/86 px-2 py-1 text-[0.58rem] font-black uppercase tracking-[0.12em] text-coffee">
+                    {item.tag}
+                  </span>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </Reveal>
   );
 }
 
