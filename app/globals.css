@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --champagne: #E8D8C8;
+  --porcelain: #F7F3EE;
+  --coffee: #4B352A;
+  --terracotta: #C46E4E;
+  --gold: #C8A46B;
+  --ink: #221A17;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(200, 164, 107, 0.18), transparent 28%),
+    linear-gradient(120deg, var(--porcelain), #efe3d8 48%, var(--porcelain));
+  color: var(--coffee);
+  font-family: Inter, "Avenir Next", "Helvetica Neue", Arial, system-ui, sans-serif;
+  text-rendering: geometricPrecision;
+}
+
+body::selection {
+  background: var(--terracotta);
+  color: white;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+img {
+  display: block;
+}
+
+input,
+textarea,
+button {
+  font: inherit;
+}
+
+@media (max-width: 720px) {
+  body {
+    background:
+      radial-gradient(circle at 12% 4%, rgba(200, 164, 107, 0.16), transparent 34%),
+      linear-gradient(135deg, var(--porcelain), #eadbce 52%, var(--porcelain));
+  }
+}
