@@ -628,31 +628,48 @@ function PremiumButton({
 
 function ResultsShowcase() {
   const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
   const current = gallery[active];
   const goTo = (index: number) => setActive((index + gallery.length) % gallery.length);
   const next = () => goTo(active + 1);
   const previous = () => goTo(active - 1);
+  const progress = `${((active + 1) / gallery.length) * 100}%`;
+
+  useEffect(() => {
+    if (paused) return;
+
+    const timer = window.setInterval(() => {
+      setActive((index) => (index + 1) % gallery.length);
+    }, 5200);
+
+    return () => window.clearInterval(timer);
+  }, [paused]);
 
   return (
     <Reveal>
-      <div className="md:hidden">
-        <div className="overflow-hidden rounded-luxe border border-coffee/10 bg-coffee shadow-luxe">
-          <div className="relative h-[min(74svh,560px)] min-h-[430px] overflow-hidden">
+      <div
+        className="overflow-hidden rounded-luxe border border-coffee/10 bg-white/64 p-3 shadow-luxe backdrop-blur-xl md:grid md:grid-cols-[1.04fr_.96fr] md:gap-4 md:p-4"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onTouchStart={() => setPaused(true)}
+      >
+        <div className="relative overflow-hidden rounded-luxe bg-coffee">
+          <div className="relative aspect-[3/4] max-h-[650px] min-h-[430px] overflow-hidden md:aspect-[4/5] md:min-h-[700px]">
             <AnimatePresence mode="wait">
               <motion.img
-                key={`${current.src}-wash`}
+                key={`${current.src}-background`}
                 src={img(current.src)}
                 alt=""
-                initial={{ opacity: 0, scale: 1.08 }}
-                animate={{ opacity: 0.48, scale: 1.14 }}
+                initial={{ opacity: 0, scale: 1.03 }}
+                animate={{ opacity: 0.55, scale: 1.12 }}
                 exit={{ opacity: 0, scale: 1.04 }}
-                transition={{ duration: 0.58, ease: [0.22, 0.76, 0.2, 1] }}
+                transition={{ duration: 0.68, ease: [0.22, 0.76, 0.2, 1] }}
                 className="absolute inset-0 h-full w-full object-cover blur-2xl"
                 style={{ objectPosition: current.position }}
                 loading={active === 0 ? "eager" : "lazy"}
               />
             </AnimatePresence>
-            <div className="absolute inset-0 bg-gradient-to-b from-coffee/32 via-transparent to-coffee/54" />
+            <div className="absolute inset-0 bg-gradient-to-b from-coffee/18 via-coffee/4 to-coffee/46" />
             <AnimatePresence mode="wait">
               <motion.img
                 key={current.src}
@@ -660,139 +677,93 @@ function ResultsShowcase() {
                 alt={`${current.title} - ${current.tag}`}
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.12}
+                dragElastic={0.1}
                 onDragEnd={(_, info) => {
-                  if (info.offset.x < -70) next();
-                  if (info.offset.x > 70) previous();
+                  if (info.offset.x < -58) next();
+                  if (info.offset.x > 58) previous();
                 }}
-                initial={{ opacity: 0, scale: 0.985, filter: "blur(10px)" }}
-                animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                exit={{ opacity: 0, scale: 1.015, filter: "blur(10px)" }}
+                initial={{ opacity: 0, x: 18, scale: 0.985, filter: "blur(10px)" }}
+                animate={{ opacity: 1, x: 0, scale: 1, filter: "blur(0px)" }}
+                exit={{ opacity: 0, x: -18, scale: 0.99, filter: "blur(10px)" }}
                 transition={{ duration: 0.58, ease: [0.22, 0.76, 0.2, 1] }}
-                className="absolute inset-0 h-full w-full cursor-grab object-contain active:cursor-grabbing"
+                className="absolute inset-0 h-full w-full cursor-grab object-contain px-1 py-1 active:cursor-grabbing md:px-0 md:py-0"
                 loading={active === 0 ? "eager" : "lazy"}
               />
             </AnimatePresence>
-          </div>
 
-          <div className="relative border-t border-white/10 p-4 text-porcelain">
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <p className="text-[0.62rem] font-black uppercase tracking-[0.24em] text-gold">
-                  {current.tag}
-                </p>
-                <h3 className="mt-2 font-display text-4xl leading-none">{current.title}</h3>
-              </div>
-              <span className="rounded-full border border-white/12 bg-white/8 px-3 py-2 text-[0.7rem] font-black text-porcelain/70">
+            <div className="absolute left-3 right-3 top-3 flex items-center justify-between gap-3 md:left-5 md:right-5 md:top-5">
+              <span className="rounded-full border border-white/16 bg-ink/42 px-3 py-2 text-[0.62rem] font-black uppercase tracking-[0.18em] text-gold shadow-soft backdrop-blur-2xl">
+                Portfólio real
+              </span>
+              <span className="rounded-full border border-white/16 bg-ink/42 px-3 py-2 text-[0.68rem] font-black text-porcelain/78 shadow-soft backdrop-blur-2xl">
                 {String(active + 1).padStart(2, "0")}/{String(gallery.length).padStart(2, "0")}
               </span>
             </div>
 
-            <div className="mt-5 grid grid-cols-[1fr_auto_auto] items-center gap-2">
-              <div className="flex gap-1.5">
-                {gallery.map((item, index) => (
-                  <button
-                    key={`${item.src}-dot`}
-                    type="button"
-                    onClick={() => goTo(index)}
-                    aria-label={`Ver ${item.title}`}
-                    className={`h-1.5 rounded-full transition-all ${
-                      active === index ? "w-8 bg-gold" : "w-3 bg-white/26"
-                    }`}
-                  />
-                ))}
-              </div>
-              <button
-                type="button"
-                onClick={previous}
-                aria-label="Resultado anterior"
-                className="grid h-12 w-12 place-items-center rounded-full border border-white/12 bg-white/10 text-xl text-porcelain transition hover:bg-white/18"
+            <div className="absolute inset-x-3 bottom-3 rounded-luxe border border-white/18 bg-ink/46 p-4 text-porcelain shadow-soft backdrop-blur-2xl md:inset-x-5 md:bottom-5 md:p-6">
+              <motion.div
+                key={`${current.src}-caption`}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.44 }}
               >
-                ‹
-              </button>
-              <button
-                type="button"
-                onClick={next}
-                aria-label="Próximo resultado"
-                className="grid h-12 w-12 place-items-center rounded-full bg-terracotta text-xl text-white shadow-soft transition hover:bg-gold hover:text-coffee"
-              >
-                ›
-              </button>
+                <p className="text-[0.62rem] font-black uppercase tracking-[0.22em] text-gold">{current.tag}</p>
+                <h3 className="mt-2 font-display text-4xl leading-none md:text-6xl">{current.title}</h3>
+              </motion.div>
             </div>
           </div>
-        </div>
 
-        <div className="mt-3 flex snap-x gap-2 overflow-x-auto pb-2">
-          {gallery.map((item, index) => (
+          <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3 border-t border-white/10 bg-coffee px-3 py-3 md:px-5 md:py-4">
             <button
-              key={`${item.src}-mobile-thumb`}
               type="button"
-              onClick={() => goTo(index)}
-              className={`relative h-20 min-w-[68px] snap-start overflow-hidden rounded-luxe border transition ${
-                active === index ? "border-terracotta ring-2 ring-terracotta/18" : "border-coffee/10 opacity-70"
-              }`}
-              aria-label={`Selecionar ${item.title}`}
+              onClick={previous}
+              aria-label="Resultado anterior"
+              className="grid h-12 w-12 place-items-center rounded-full border border-white/16 bg-white/8 text-2xl text-porcelain transition hover:bg-white/16"
             >
-              <img
-                src={img(item.src)}
-                alt=""
-                className="h-full w-full object-cover"
-                style={{ objectPosition: item.position }}
-                loading="lazy"
-              />
+              ‹
             </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="hidden gap-4 md:grid md:grid-cols-[1.12fr_.88fr] md:items-stretch">
-        <div className="relative min-h-[720px] overflow-hidden rounded-luxe bg-champagne shadow-luxe">
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={current.src}
-              src={img(current.src)}
-              alt={`${current.title} - ${current.tag}`}
-              initial={{ opacity: 0, scale: 1.035, filter: "blur(12px)" }}
-              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-              exit={{ opacity: 0, scale: 0.985, filter: "blur(10px)" }}
-              transition={{ duration: 0.62, ease: [0.22, 0.76, 0.2, 1] }}
-              className="absolute inset-0 h-full w-full object-cover"
-              style={{ objectPosition: current.position }}
-              loading={active === 0 ? "eager" : "lazy"}
-            />
-          </AnimatePresence>
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/62 via-ink/6 to-transparent" />
-          <motion.div
-            key={`${current.src}-caption`}
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.48 }}
-            className="absolute inset-x-3 bottom-3 rounded-luxe border border-white/20 bg-ink/40 p-4 text-porcelain shadow-soft backdrop-blur-2xl md:inset-x-5 md:bottom-5 md:p-6"
-          >
-            <p className="text-[0.66rem] font-black uppercase tracking-[0.22em] text-gold">{current.tag}</p>
-            <h3 className="mt-2 font-display text-4xl leading-none md:text-6xl">{current.title}</h3>
-          </motion.div>
-        </div>
-
-        <div className="rounded-luxe border border-coffee/10 bg-white/48 p-3 shadow-soft backdrop-blur-xl md:p-4">
-          <div className="mb-3 flex items-center justify-between px-1">
-            <p className="text-[0.68rem] font-black uppercase tracking-[0.2em] text-terracotta">
-              Selecione o resultado
-            </p>
-            <span className="font-display text-2xl text-coffee/54">
-              {String(active + 1).padStart(2, "0")}
-            </span>
+            <div className="h-1.5 overflow-hidden rounded-full bg-white/12">
+              <motion.div
+                className="h-full rounded-full bg-gradient-to-r from-gold to-terracotta"
+                animate={{ width: progress }}
+                transition={{ duration: 0.45, ease: [0.22, 0.76, 0.2, 1] }}
+              />
+            </div>
+            <button
+              type="button"
+              onClick={next}
+              aria-label="Próximo resultado"
+              className="grid h-12 w-12 place-items-center rounded-full bg-terracotta text-2xl text-white shadow-soft transition hover:bg-gold hover:text-coffee"
+            >
+              ›
+            </button>
           </div>
-          <div className="flex snap-x gap-3 overflow-x-auto pb-2 md:grid md:max-h-[640px] md:grid-cols-2 md:overflow-visible md:pb-0">
+        </div>
+
+        <div className="mt-4 md:mt-0 md:flex md:flex-col md:justify-between">
+          <div className="rounded-luxe border border-coffee/10 bg-porcelain/82 p-4 md:p-6">
+            <p className="text-[0.68rem] font-black uppercase tracking-[0.22em] text-terracotta">Selecione um resultado</p>
+            <p className="mt-3 text-sm leading-6 text-coffee/62 md:text-base md:leading-7">
+              Toque em uma produção para ver o acabamento em destaque. O carrossel também avança
+              sozinho e aceita arrastar para os lados no celular.
+            </p>
+          </div>
+
+          <div className="mt-3 grid grid-cols-3 gap-2 md:mt-4 md:grid-cols-2 md:gap-3">
             {gallery.map((item, index) => (
               <button
                 key={item.src}
                 type="button"
-                onClick={() => setActive(index)}
-                className={`group relative h-40 min-w-[150px] snap-start overflow-hidden rounded-luxe border text-left shadow-soft transition duration-500 md:h-[150px] md:min-w-0 ${
+                onClick={() => {
+                  setPaused(true);
+                  goTo(index);
+                }}
+                aria-label={`Ver resultado ${item.title}`}
+                aria-pressed={active === index}
+                className={`group relative aspect-[4/5] overflow-hidden rounded-luxe border text-left shadow-soft transition duration-500 md:aspect-[16/12] ${
                   active === index
                     ? "border-terracotta/70 ring-2 ring-terracotta/18"
-                    : "border-white/45 opacity-78 hover:opacity-100"
+                    : "border-white/60 opacity-76 hover:opacity-100"
                 }`}
               >
                 <img
@@ -802,12 +773,15 @@ function ResultsShowcase() {
                   style={{ objectPosition: item.position }}
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
-                <div className="absolute inset-x-2 bottom-2">
-                  <span className="rounded-full bg-porcelain/86 px-2 py-1 text-[0.58rem] font-black uppercase tracking-[0.12em] text-coffee">
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent opacity-85 transition group-hover:opacity-70" />
+                <div className="absolute inset-x-1.5 bottom-1.5 md:inset-x-2 md:bottom-2">
+                  <span className="inline-flex rounded-full bg-porcelain/88 px-2 py-1 text-[0.5rem] font-black uppercase tracking-[0.1em] text-coffee md:text-[0.58rem]">
                     {item.tag}
                   </span>
                 </div>
+                {active === index ? (
+                  <span className="absolute right-2 top-2 h-2.5 w-2.5 rounded-full bg-gold shadow-[0_0_0_4px_rgba(200,164,107,0.24)]" />
+                ) : null}
               </button>
             ))}
           </div>
