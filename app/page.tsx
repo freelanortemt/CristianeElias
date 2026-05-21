@@ -1,13 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
-import { useMemo, useState } from "react";
-
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-const img = (src: string) => `${basePath}/images/${src}`;
-
-const whatsapp = "5566999581011";
-const instagram = "https://www.instagram.com/cristianeeliasmakeup";
+import { useEffect, useMemo, useState } from "react";
+import { coursePath, courses, img, instagram, whatsappLink } from "./course-data";
 
 const navItems = [
   ["Atelier", "#sobre"],
@@ -50,74 +45,42 @@ const services = [
   }
 ];
 
-const courses = [
-  {
-    title: "Maquiagem em 10 minutos",
-    label: "Método autoral",
-    copy: "O método autoral para criar uma make bonita, rápida e elegante mesmo em dias corridos.",
-    href: "https://pay.kiwify.com.br/QBjsuRK",
-    featured: true
-  },
-  {
-    title: "Curso Babyliss",
-    label: "Finalização",
-    copy: "Aprenda a construir ondas elegantes, com acabamento sofisticado e visual de salão.",
-    href: "https://kiwify.app/hSgf5jj"
-  },
-  {
-    title: "Olhos marcantes",
-    label: "Olhar",
-    copy: "Técnicas para valorizar o olhar com profundidade, definição e acabamento refinado.",
-    href: "https://pay.kiwify.com.br/qqsKTLb"
-  },
-  {
-    title: "Cílios postiços",
-    label: "Continuação",
-    copy: "Complemento da make em 10 minutos para aplicar cílios com segurança e naturalidade.",
-    href: "https://kiwify.app/osZo2Dk"
-  }
-];
-
 const gallery = [
   {
     src: "cliente-soft-glam-01.jpg",
     title: "Soft glam social",
-    tag: "Pele luminosa"
+    tag: "Pele luminosa",
+    position: "center 36%"
   },
   {
     src: "cliente-evento-02.jpg",
     title: "Evento elegante",
-    tag: "Olhar esfumado"
+    tag: "Olhar esfumado",
+    position: "center 38%"
   },
   {
     src: "cliente-editorial-03.jpg",
     title: "Beleza editorial",
-    tag: "Presença natural"
+    tag: "Presença natural",
+    position: "center 34%"
   },
   {
     src: "cliente-close-04.jpg",
     title: "Detalhe de técnica",
-    tag: "Acabamento premium"
+    tag: "Acabamento premium",
+    position: "center 42%"
   },
   {
     src: "cliente-day-glow-05.jpg",
     title: "Day glow",
-    tag: "Leveza sofisticada"
+    tag: "Leveza sofisticada",
+    position: "center 38%"
   },
   {
     src: "cliente-natural-06.jpg",
     title: "Natural chic",
-    tag: "Imagem pessoal"
-  },
-  {
-    src: "cristiane-makeup-gloss.jpg",
-    title: "Finalização glossy",
-    tag: "Hydra gloss"
-  },
-  {
-    src: "cristiane-retrato-corporativo.jpg",
-    title: "Imagem corporativa",
-    tag: "Consultoria"
+    tag: "Imagem pessoal",
+    position: "center 35%"
   }
 ];
 
@@ -162,10 +125,6 @@ const fadeUp = {
   hidden: { opacity: 0, y: 34, filter: "blur(10px)" },
   visible: { opacity: 1, y: 0, filter: "blur(0px)" }
 };
-
-function whatsappLink(message: string) {
-  return `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
-}
 
 function Reveal({
   children,
@@ -313,21 +272,11 @@ export default function Home() {
         </div>
       </section>
 
-      <Section id="sobre" eyebrow="Atelier de beleza" title="Uma experiência personalizada para realçar presença, segurança e feminilidade.">
-        <div className="grid gap-8 md:grid-cols-[.88fr_1.12fr] md:items-end">
+      <Section id="sobre" eyebrow="Atelier de beleza" title="Uma assinatura profissional que une técnica, presença e atendimento exclusivo.">
+        <div className="grid gap-4 md:grid-cols-[1.05fr_.95fr] md:items-stretch">
           <Reveal>
-            <div className="overflow-hidden rounded-luxe shadow-luxe">
-              <img
-                src={img("cristiane-retrato-premium.jpg")}
-                alt="Cristiane Elias, consultora de beleza"
-                className="h-[560px] w-full object-cover object-top md:h-[720px]"
-                loading="lazy"
-              />
-            </div>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <div className="rounded-luxe border border-coffee/10 bg-white/55 p-6 shadow-soft backdrop-blur-xl md:p-10">
-              <p className="text-lg leading-8 text-coffee/72">
+            <div className="h-full rounded-luxe border border-coffee/10 bg-white/62 p-6 shadow-soft backdrop-blur-xl md:p-10">
+              <p className="text-lg leading-8 text-coffee/72 md:text-xl md:leading-9">
                 Cristiane Elias é consultora de beleza em Sinop - MT, especialista em maquiagem
                 prática e elegante, criadora do método “Maquiagem em 10 Minutos” e referência em
                 técnicas profissionais adaptadas para a rotina real da mulher.
@@ -340,6 +289,30 @@ export default function Home() {
                   "Técnicas para rotina, eventos e empresas"
                 ].map((item) => (
                   <div key={item} className="rounded-luxe border border-gold/25 bg-champagne/35 p-4 text-sm font-bold text-coffee/74">
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="relative flex h-full min-h-[340px] flex-col justify-between overflow-hidden rounded-luxe bg-coffee p-6 text-porcelain shadow-luxe md:min-h-[520px] md:p-10">
+              <div className="absolute inset-0 opacity-25 [background-image:linear-gradient(rgba(255,255,255,.22)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.12)_1px,transparent_1px)] [background-size:54px_54px]" />
+              <div className="absolute -right-16 -top-16 h-52 w-52 rounded-full bg-gold/20 blur-3xl" />
+              <div className="relative">
+                <p className="text-[0.68rem] font-black uppercase tracking-[0.24em] text-gold">assinatura</p>
+                <h3 className="mt-5 font-display text-5xl leading-[0.9] md:text-7xl">
+                  Beleza natural, acabamento de alto padrão.
+                </h3>
+              </div>
+              <div className="relative mt-10 grid gap-3">
+                {[
+                  "Maquiagem social profissional",
+                  "Auto maquiagem e cursos",
+                  "Sobrancelhas, henna e brow lamination",
+                  "Consultoria de imagem corporativa"
+                ].map((item) => (
+                  <div key={item} className="rounded-luxe border border-white/12 bg-white/8 px-4 py-3 text-sm font-bold text-porcelain/78">
                     {item}
                   </div>
                 ))}
@@ -418,7 +391,12 @@ export default function Home() {
                     {course.copy}
                   </p>
                 </div>
-                <PremiumButton href={course.href} label="Comprar curso" className="mt-8 w-full" variant={course.featured ? "light" : "primary"} />
+                <PremiumButton
+                  href={coursePath(course.slug)}
+                  label="Saiba mais"
+                  className="mt-8 w-full"
+                  variant={course.featured ? "light" : "primary"}
+                />
               </article>
             </Reveal>
           ))}
@@ -516,13 +494,27 @@ export default function Home() {
 function Header() {
   return (
     <header className="fixed inset-x-0 top-3 z-50">
-      <nav className="mx-auto flex min-h-[68px] w-[min(1180px,calc(100%-24px))] items-center justify-between rounded-luxe border border-white/45 bg-porcelain/74 px-4 shadow-soft backdrop-blur-2xl md:px-5">
-        <a href="#inicio" aria-label="Cristiane Elias" className="inline-flex items-center">
-          <img
-            src={img("cristiane-elias-logo-transparent.png")}
-            alt=""
-            className="h-10 w-40 object-contain object-left md:h-12 md:w-56"
-          />
+      <nav className="mx-auto flex min-h-[68px] w-[min(1180px,calc(100%-24px))] items-center justify-between rounded-luxe border border-white/55 bg-porcelain/94 px-4 shadow-soft backdrop-blur-2xl md:px-5">
+        <a
+          href="#inicio"
+          aria-label="Cristiane Elias"
+          className="group inline-flex min-w-0 items-center gap-2 rounded-luxe border border-coffee/10 bg-white/86 p-1 pr-3 shadow-[0_10px_28px_rgba(75,53,42,0.08)] backdrop-blur-xl transition hover:border-gold/45"
+        >
+          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[7px] bg-coffee shadow-soft md:h-12 md:w-12">
+            <img
+              src={img("cristiane-elias-logo-square-transparent.png")}
+              alt=""
+              className="h-9 w-9 object-contain brightness-125 contrast-125 md:h-10 md:w-10"
+            />
+          </span>
+          <span className="min-w-0 leading-none">
+            <span className="block truncate font-display text-[1.1rem] text-coffee md:text-[1.35rem]">
+              Cristiane Elias
+            </span>
+            <span className="mt-1 block truncate text-[0.55rem] font-black uppercase tracking-[0.18em] text-terracotta md:text-[0.62rem]">
+              Makeup artist
+            </span>
+          </span>
         </a>
         <div className="hidden items-center gap-1 md:flex">
           {navItems.map(([label, href]) => (
@@ -637,11 +629,124 @@ function PremiumButton({
 function ResultsShowcase() {
   const [active, setActive] = useState(0);
   const current = gallery[active];
+  const goTo = (index: number) => setActive((index + gallery.length) % gallery.length);
+  const next = () => goTo(active + 1);
+  const previous = () => goTo(active - 1);
 
   return (
     <Reveal>
-      <div className="grid gap-4 md:grid-cols-[1.12fr_.88fr] md:items-stretch">
-        <div className="relative min-h-[470px] overflow-hidden rounded-luxe bg-champagne shadow-luxe md:min-h-[720px]">
+      <div className="md:hidden">
+        <div className="overflow-hidden rounded-luxe border border-coffee/10 bg-coffee shadow-luxe">
+          <div className="relative h-[min(74svh,560px)] min-h-[430px] overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={`${current.src}-wash`}
+                src={img(current.src)}
+                alt=""
+                initial={{ opacity: 0, scale: 1.08 }}
+                animate={{ opacity: 0.48, scale: 1.14 }}
+                exit={{ opacity: 0, scale: 1.04 }}
+                transition={{ duration: 0.58, ease: [0.22, 0.76, 0.2, 1] }}
+                className="absolute inset-0 h-full w-full object-cover blur-2xl"
+                style={{ objectPosition: current.position }}
+                loading={active === 0 ? "eager" : "lazy"}
+              />
+            </AnimatePresence>
+            <div className="absolute inset-0 bg-gradient-to-b from-coffee/32 via-transparent to-coffee/54" />
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={current.src}
+                src={img(current.src)}
+                alt={`${current.title} - ${current.tag}`}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.12}
+                onDragEnd={(_, info) => {
+                  if (info.offset.x < -70) next();
+                  if (info.offset.x > 70) previous();
+                }}
+                initial={{ opacity: 0, scale: 0.985, filter: "blur(10px)" }}
+                animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                exit={{ opacity: 0, scale: 1.015, filter: "blur(10px)" }}
+                transition={{ duration: 0.58, ease: [0.22, 0.76, 0.2, 1] }}
+                className="absolute inset-0 h-full w-full cursor-grab object-contain active:cursor-grabbing"
+                loading={active === 0 ? "eager" : "lazy"}
+              />
+            </AnimatePresence>
+          </div>
+
+          <div className="relative border-t border-white/10 p-4 text-porcelain">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-[0.62rem] font-black uppercase tracking-[0.24em] text-gold">
+                  {current.tag}
+                </p>
+                <h3 className="mt-2 font-display text-4xl leading-none">{current.title}</h3>
+              </div>
+              <span className="rounded-full border border-white/12 bg-white/8 px-3 py-2 text-[0.7rem] font-black text-porcelain/70">
+                {String(active + 1).padStart(2, "0")}/{String(gallery.length).padStart(2, "0")}
+              </span>
+            </div>
+
+            <div className="mt-5 grid grid-cols-[1fr_auto_auto] items-center gap-2">
+              <div className="flex gap-1.5">
+                {gallery.map((item, index) => (
+                  <button
+                    key={`${item.src}-dot`}
+                    type="button"
+                    onClick={() => goTo(index)}
+                    aria-label={`Ver ${item.title}`}
+                    className={`h-1.5 rounded-full transition-all ${
+                      active === index ? "w-8 bg-gold" : "w-3 bg-white/26"
+                    }`}
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={previous}
+                aria-label="Resultado anterior"
+                className="grid h-12 w-12 place-items-center rounded-full border border-white/12 bg-white/10 text-xl text-porcelain transition hover:bg-white/18"
+              >
+                ‹
+              </button>
+              <button
+                type="button"
+                onClick={next}
+                aria-label="Próximo resultado"
+                className="grid h-12 w-12 place-items-center rounded-full bg-terracotta text-xl text-white shadow-soft transition hover:bg-gold hover:text-coffee"
+              >
+                ›
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-3 flex snap-x gap-2 overflow-x-auto pb-2">
+          {gallery.map((item, index) => (
+            <button
+              key={`${item.src}-mobile-thumb`}
+              type="button"
+              onClick={() => goTo(index)}
+              className={`relative h-20 min-w-[68px] snap-start overflow-hidden rounded-luxe border transition ${
+                active === index ? "border-terracotta ring-2 ring-terracotta/18" : "border-coffee/10 opacity-70"
+              }`}
+              aria-label={`Selecionar ${item.title}`}
+            >
+              <img
+                src={img(item.src)}
+                alt=""
+                className="h-full w-full object-cover"
+                style={{ objectPosition: item.position }}
+                loading="lazy"
+              />
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="hidden gap-4 md:grid md:grid-cols-[1.12fr_.88fr] md:items-stretch">
+        <div className="relative min-h-[720px] overflow-hidden rounded-luxe bg-champagne shadow-luxe">
           <AnimatePresence mode="wait">
             <motion.img
               key={current.src}
@@ -652,6 +757,7 @@ function ResultsShowcase() {
               exit={{ opacity: 0, scale: 0.985, filter: "blur(10px)" }}
               transition={{ duration: 0.62, ease: [0.22, 0.76, 0.2, 1] }}
               className="absolute inset-0 h-full w-full object-cover"
+              style={{ objectPosition: current.position }}
               loading={active === 0 ? "eager" : "lazy"}
             />
           </AnimatePresence>
@@ -693,6 +799,7 @@ function ResultsShowcase() {
                   src={img(item.src)}
                   alt=""
                   className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                  style={{ objectPosition: item.position }}
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
@@ -787,12 +894,26 @@ function Field({
 }
 
 function FloatingWhatsApp() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const updateVisibility = () => {
+      setVisible(window.scrollY > window.innerHeight * 0.6);
+    };
+
+    updateVisibility();
+    window.addEventListener("scroll", updateVisibility, { passive: true });
+    return () => window.removeEventListener("scroll", updateVisibility);
+  }, []);
+
   return (
     <a
       href={whatsappLink("Oi, Cristiane! Quero falar sobre um atendimento.")}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-4 right-4 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#1FAF61] text-xl font-black text-white shadow-luxe transition hover:-translate-y-1 md:h-auto md:w-auto md:px-5 md:py-4"
+      className={`fixed bottom-4 right-4 z-40 grid h-14 w-14 place-items-center rounded-full bg-[#1FAF61] text-xl font-black text-white shadow-luxe transition duration-300 hover:-translate-y-1 md:h-auto md:w-auto md:px-5 md:py-4 ${
+        visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0 md:pointer-events-auto md:translate-y-0 md:opacity-100"
+      }`}
       aria-label="Chamar no WhatsApp"
     >
       <span className="md:hidden">↗</span>
