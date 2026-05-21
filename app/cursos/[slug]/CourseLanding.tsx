@@ -78,7 +78,7 @@ export default function CourseLanding({ course }: { course: Course }) {
             className="inline-flex min-w-0 items-center gap-2 rounded-luxe border border-coffee/10 bg-white/86 p-1 pr-3 shadow-[0_10px_28px_rgba(75,53,42,0.08)]"
           >
             <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[7px] bg-coffee shadow-soft">
-              <img src={img("cristiane-elias-logo-square-transparent.png")} alt="" className="h-9 w-9 object-contain brightness-125 contrast-125" />
+              <img src={img("ce-premium-monogram.svg")} alt="" className="h-9 w-9 object-contain" />
             </span>
             <span className="min-w-0 leading-none">
               <span className="block truncate font-display text-[1.08rem] text-coffee md:text-[1.35rem]">Cristiane Elias</span>

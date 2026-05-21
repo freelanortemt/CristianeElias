@@ -502,9 +502,9 @@ function Header() {
         >
           <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[7px] bg-coffee shadow-soft md:h-12 md:w-12">
             <img
-              src={img("cristiane-elias-logo-square-transparent.png")}
+              src={img("ce-premium-monogram.svg")}
               alt=""
-              className="h-9 w-9 object-contain brightness-125 contrast-125 md:h-10 md:w-10"
+              className="h-9 w-9 object-contain md:h-10 md:w-10"
             />
           </span>
           <span className="min-w-0 leading-none">
