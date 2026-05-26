@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+const siteUrl = process.env.CUSTOM_DOMAIN
+  ? `https://${process.env.CUSTOM_DOMAIN}`
+  : "https://freelanortemt.github.io/CristianeElias";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://freelanortemt.github.io/CristianeElias/"),
+  metadataBase: new URL(siteUrl),
   title: "Cristiane Elias | Consultora de Beleza em Sinop - MT",
   description:
     "Maquiagem profissional, cursos, sobrancelhas e consultoria de beleza em Sinop - MT com Cristiane Elias, especialista há 18 anos em beleza prática e elegante.",
