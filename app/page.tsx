@@ -500,11 +500,11 @@ function Header() {
           aria-label="Cristiane Elias"
           className="group inline-flex min-w-0 items-center gap-2 rounded-luxe border border-coffee/10 bg-white/86 p-1 pr-3 shadow-[0_10px_28px_rgba(75,53,42,0.08)] backdrop-blur-xl transition hover:border-gold/45"
         >
-          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[7px] bg-coffee shadow-soft md:h-12 md:w-12">
+          <span className="grid h-11 w-11 shrink-0 place-items-center overflow-hidden rounded-[7px] bg-terracotta shadow-soft ring-1 ring-gold/35 md:h-12 md:w-12">
             <img
-              src={img("ce-premium-monogram.svg")}
+              src={img("ce-header-premium.png")}
               alt=""
-              className="h-9 w-9 object-contain md:h-10 md:w-10"
+              className="h-full w-full object-cover"
             />
           </span>
           <span className="min-w-0 leading-none">
