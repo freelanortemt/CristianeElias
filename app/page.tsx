@@ -511,8 +511,8 @@ function Header() {
             <span className="block truncate font-display text-[1.1rem] text-coffee md:text-[1.35rem]">
               Cristiane Elias
             </span>
-            <span className="mt-1 block truncate text-[0.55rem] font-black uppercase tracking-[0.18em] text-terracotta md:text-[0.62rem]">
-              Makeup artist
+            <span className="mt-1 block truncate text-[0.47rem] font-bold uppercase tracking-[0.1em] text-terracotta md:text-[0.56rem] md:tracking-[0.14em]">
+              Maquiadora profissional
             </span>
           </span>
         </a>
