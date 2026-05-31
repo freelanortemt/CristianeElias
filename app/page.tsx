@@ -502,7 +502,7 @@ function Header() {
         >
           <span className="grid h-11 w-11 shrink-0 place-items-center overflow-hidden rounded-[7px] bg-terracotta shadow-soft ring-1 ring-gold/35 md:h-12 md:w-12">
             <img
-              src={img("ce-header-premium.png")}
+              src={img("ce-header-premium-v2.png")}
               alt=""
               className="h-full w-full object-cover"
             />
